@@ -112,7 +112,34 @@ class LinkedList
       list += "nil"
       return list
     end
-    to_s(node.next_node, list)
+      to_s(node.next_node, list)
+  end
+
+  def insert_at(value, index)
+    if index == 0
+      previous_node = @head
+      previous_node_reference = previous_node.next_node
+      new_node = Node.new(value)
+      @head = new_node
+      new_node.next_node = previous_node_reference
+    else
+      previous_node = at(index - 1)
+      previous_node_reference = previous_node.next_node
+      new_node = Node.new(value)
+      previous_node.next_node = new_node
+      new_node.next_node = previous_node_reference
+    end
+  end
+
+  def remove_at(index)
+    if index == 0
+      head_reference = @head.next_node
+      @head = head_reference
+    else
+      next_node_reference = at(index + 1)
+      previous_node_reference = at(index - 1)
+      previous_node_reference.next_node = next_node_reference
+    end
   end
 end
 
@@ -120,5 +147,6 @@ my_list = LinkedList.new
 my_list.append("hi")
 my_list.append("ihi")
 my_list.append("hi")
-
+puts my_list
+my_list.remove_at(2)
 puts my_list
